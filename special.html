@@ -1,118 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A Special Message for You</title>
-    <style>
-        :root {
-            --primary-color: #6c5ce7;
-            --accent-color: #a29bfe;
-            --bg-color: #0f0c29;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>A Special Surprise</title>
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
-            font-family: 'Arial', sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white;
-            overflow: hidden;
-        }
+<style>
+:root {
+    --primary-color: #6c5ce7;
+    --accent-color: #a29bfe;
+}
 
-        /* Initial Button Style */
-        #reveal-btn {
-            padding: 20px 40px;
-            font-size: 1.5rem;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 0 20px rgba(108, 92, 231, 0.6);
-            transition: all 0.3s ease;
-            z-index: 10;
-        }
+body, html {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #0f0c29, #302b63, #24243e);
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
 
-        #reveal-btn:hover {
-            transform: scale(1.1);
-            background-color: var(--accent-color);
-            box-shadow: 0 0 30px rgba(162, 155, 254, 0.8);
-        }
+/* Button */
+#reveal-btn {
+    padding: 20px 40px;
+    font-size: 1.5rem;
+    background-color: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(108,92,231,0.6);
+    transition: 0.3s;
+}
 
-        /* Video Container (Hidden Initially) */
-        #img-container {
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            width: 90%;
-            max-width: 800px;
-            animation: fadeIn 2s ease-in forwards;
-        }
+#reveal-btn:hover {
+    transform: scale(1.1);
+    background-color: var(--accent-color);
+}
 
-        img {
-            width: 100%;
-            border-radius: 15px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.8);
-            border: 3px solid var(--accent-color);
-        }
+/* Gallery */
+#gallery {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    animation: fadeIn 1.5s ease forwards;
+}
 
-        h1 {
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-            text-align: center;
-        }
+#gallery h1 {
+    margin-bottom: 20px;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+img {
+    width: 300px;
+    max-width: 90%;
+    border-radius: 20px;
+    box-shadow: 0 0 40px rgba(0,0,0,0.8);
+    border: 3px solid var(--accent-color);
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
 
-        /* Confetti Effect */
-        .confetti {
-            position: absolute;
-            width: 10px;
-            height: 10px;
-            background-color: #f00;
-            opacity: 0;
-        }
-    </style>
+p {
+    margin-top: 15px;
+    font-style: italic;
+}
+
+/* Animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+</style>
 </head>
+
 <body>
 
-    <button id="reveal-btn" onclick="showSurprise()">Click for a Surprise! 🎁</button>
+<button id="reveal-btn" onclick="startShow()">Click for a Surprise 🎁</button>
 
-    <div id="img-container">
-        <h1>Happy Birthday, Bisccoti..! 🎉</h1>
-        
-        <img id="birthdayimg" controls>
-            
-    </img>
-        
-        <p style="margin-top: 20px; font-style: italic;">"You're the best part of every day!"</p>
-    </div>
+<div id="gallery">
+    <h1>Happy Birthday, Biscotti..! 🎉</h1>
+    <img id="photo" src="" alt="Memory">
+    <p id="caption">Every picture tells a story ❤️</p>
+</div>
 
-    <script>
-        function showSurprise() {
-            // Hide the button
-            document.getElementById('reveal-btn').style.display = 'none';
-            
-            // Show the video container
-            const container = document.getElementById('img-container');
-            container.style.display = 'flex';
-            
-            // Play the video automatically
-            const img = document.getElementById('birthdayimg');
-            img.play();
+<script>
+const photos = [
+    "photo1.jpg",
+    "photo2.jpg",
+    "photo3.jpg",
+    "photo4.jpg"
+];
 
-            // Change background to something more festive
-            document.body.style.background = "radial-gradient(circle, #24243e 0%, #000000 100%)";
+let index = 0;
+
+function startShow() {
+    document.getElementById("reveal-btn").style.display = "none";
+
+    const gallery = document.getElementById("gallery");
+    gallery.style.display = "flex";
+
+    showNextPhoto();
+}
+
+function showNextPhoto() {
+    const img = document.getElementById("photo");
+    
+    img.style.opacity = 0;
+
+    setTimeout(() => {
+        img.src = photos[index];
+        img.style.opacity = 1;
+
+        index++;
+        if (index < photos.length) {
+            setTimeout(showNextPhoto, 2500); // next photo timing
         }
-    </script>
+    }, 500);
+}
+</script>
+
 </body>
 </html>
